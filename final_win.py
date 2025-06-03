@@ -1,6 +1,8 @@
 # напиши здесь код третьего экрана приложения
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QLineEdit
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QLineEdit, QWidget, QVBoxLayout
+
+from instr import *
 
 class ThirdWin(QWidget):
     def __init__(self):
@@ -19,4 +21,16 @@ class ThirdWin(QWidget):
         pass
 
     def initUI(self):
-        pass
+        self.mainLayoutV = QVBoxLayout()
+        self.txt_result = QLabel(txt_index + '0')
+        self.txt_heart_result = QLabel(txt_workheart)
+
+
+        self.mainLayoutV.addWidget(self.txt_result, alignment = Qt.AlignCenter)
+        self.mainLayoutV.addWidget(self.txt_heart_result, alignment = Qt.AlignCenter)
+
+        self.setLayout(self.mainLayoutV)
+
+
+#app = QApplication([])
+#tw = ThirdWin()
