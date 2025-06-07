@@ -1,6 +1,11 @@
 # напиши здесь код для второго экрана приложения
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QLineEdit, QWidget, QHBoxLayout, QVBoxLayout
+
+
+
+from PyQt5.QtGui import QFont
+
 
 from instr import *
 from final_win import *
@@ -21,6 +26,9 @@ class SecondWin(QWidget):
         
     def connects(self):
         self.btn_send_results.clicked.connect(self.next_clicked)
+        self.btn_test1.clicked.connect(self.timerTest1)
+        self.btn_test2.clicked.connect(self.timerTest2)
+
 
     def initUI(self):
         self.mainLayoutH = QHBoxLayout()
@@ -43,7 +51,7 @@ class SecondWin(QWidget):
         self.edit_pulse_after = QLineEdit()
         self.btn_send_results = QPushButton(txt_sendresults)
 
-        self.timer = QLabel(txt_timer)
+        self.txt_timer = QLabel(txt_timer)
 
 
         self.mainLayoutV1.addWidget(self.txt_line_name, alignment = Qt.AlignLeft)
@@ -62,7 +70,7 @@ class SecondWin(QWidget):
         self.mainLayoutV1.addWidget(self.edit_pulse_after, alignment = Qt.AlignLeft)
         self.mainLayoutV1.addWidget(self.btn_send_results, alignment = Qt.AlignCenter)
         
-        self.mainLayoutV2.addWidget(self.timer, alignment = Qt.AlignCenter)
+        self.mainLayoutV2.addWidget(self.txt_timer, alignment = Qt.AlignCenter)
 
 
 
@@ -76,11 +84,51 @@ class SecondWin(QWidget):
         self.mainLayoutH.addLayout(self.mainLayoutV1)
         self.mainLayoutH.addLayout(self.mainLayoutV2)
 
+
+        self.txt_timer.hide()
+
         self.setLayout(self.mainLayoutH)
         
     def next_clicked(self):
         self.hide()
         self.tw = ThirdWin()
 
+    def timerTest1(self):
+        global time
+        time = QTime(0, 0, 15)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer1Event)
+        self.timer.start(1000)
+    
+    def timer1Event(self):
+        self.txt_timer.show()
+        global time
+        
+        self.txt_timer.setText(time.toString("hh:mm:ss")[6:8])
+        self.txt_timer.setFont(QFont("Arial", 36, QFont.Bold, True))
+        self.txt_timer.setStyleSheet('color: rgb(0, 0, 0)')
+        time = time.addSecs(-1)
+
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+
+    def timerTest2(self):
+        global time
+        time = QTime(0, 0, 30)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer2Event)
+        self.timer.start(1500)
+
+    def timer2Event(self):
+        self.txt_timer.show()
+        global time
+        
+        self.txt_timer.setText(time.toString("hh:mm:ss")[6:8])
+        self.txt_timer.setFont(QFont("Arial", 36, QFont.Bold, True))
+        self.txt_timer.setStyleSheet('color: rgb(0, 0, 0)')
+        time = time.addSecs(-1)
+
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
 #app = QApplication([])
 #sw = SecondWin()
