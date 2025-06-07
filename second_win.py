@@ -28,6 +28,7 @@ class SecondWin(QWidget):
         self.btn_send_results.clicked.connect(self.next_clicked)
         self.btn_test1.clicked.connect(self.timerTest1)
         self.btn_test2.clicked.connect(self.timerTest2)
+        self.btn_test3.clicked.connect(self.timerTest3)
 
 
     def initUI(self):
@@ -37,7 +38,7 @@ class SecondWin(QWidget):
 
         self.txt_line_name = QLabel(txt_name)
         self.edit_line_name = QLineEdit()
-        self.edit_line_age = QLineEdit()
+        #self.edit_line_age = QLineEdit()
         self.txt_age = QLabel(txt_age)
         self.edit_age = QLineEdit()
         self.txt_first_hint = QLabel(txt_test1)
@@ -56,7 +57,7 @@ class SecondWin(QWidget):
 
         self.mainLayoutV1.addWidget(self.txt_line_name, alignment = Qt.AlignLeft)
         self.mainLayoutV1.addWidget(self.edit_line_name, alignment = Qt.AlignLeft)
-        self.mainLayoutV1.addWidget(self.edit_line_age, alignment = Qt.AlignLeft)
+        #self.mainLayoutV1.addWidget(self.edit_line_age, alignment = Qt.AlignLeft)
         self.mainLayoutV1.addWidget(self.txt_age, alignment = Qt.AlignLeft)
         self.mainLayoutV1.addWidget(self.edit_age, alignment = Qt.AlignLeft)
         self.mainLayoutV1.addWidget(self.txt_first_hint, alignment = Qt.AlignLeft)
@@ -91,11 +92,13 @@ class SecondWin(QWidget):
         
     def next_clicked(self):
         self.hide()
-        self.tw = ThirdWin()
+        self.exp = Experiment(int(self.edit_age.text()), int(self.edit_pulse1.text()), int(self.edit_pulse_before.text()), int(self.edit_pulse_after.text()))
+        
+        self.tw = ThirdWin(self.exp)
 
     def timerTest1(self):
         global time
-        time = QTime(0, 0, 15)
+        time = QTime(0, 0, 16)
         self.timer = QTimer()
         self.timer.timeout.connect(self.timer1Event)
         self.timer.start(1000)
@@ -103,18 +106,18 @@ class SecondWin(QWidget):
     def timer1Event(self):
         self.txt_timer.show()
         global time
-        
+        time = time.addSecs(-1)
         self.txt_timer.setText(time.toString("hh:mm:ss")[6:8])
         self.txt_timer.setFont(QFont("Arial", 36, QFont.Bold, True))
         self.txt_timer.setStyleSheet('color: rgb(0, 0, 0)')
-        time = time.addSecs(-1)
+        
 
         if time.toString("hh:mm:ss") == "00:00:00":
             self.timer.stop()
 
     def timerTest2(self):
         global time
-        time = QTime(0, 0, 30)
+        time = QTime(0, 0, 31)
         self.timer = QTimer()
         self.timer.timeout.connect(self.timer2Event)
         self.timer.start(1500)
@@ -122,13 +125,42 @@ class SecondWin(QWidget):
     def timer2Event(self):
         self.txt_timer.show()
         global time
-        
+        time = time.addSecs(-1)
         self.txt_timer.setText(time.toString("hh:mm:ss")[6:8])
         self.txt_timer.setFont(QFont("Arial", 36, QFont.Bold, True))
         self.txt_timer.setStyleSheet('color: rgb(0, 0, 0)')
-        time = time.addSecs(-1)
+        
 
         if time.toString("hh:mm:ss") == "00:00:00":
             self.timer.stop()
+
+    def timerTest3(self):
+        global time
+        time = QTime(0, 1, 1)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer3Event)
+        self.timer.start(100)
+
+    def timer3Event(self):
+        self.txt_timer.show()
+        global time
+        time = time.addSecs(-1)
+        self.txt_timer.setText(time.toString("hh:mm:ss")[4:8])
+        self.txt_timer.setFont(QFont("Arial", 36, QFont.Bold, True))
+        self.txt_timer.setStyleSheet('color: rgb(3, 252, 78)')
+        
+        
+        if int(time.toString("hh:mm:ss")[6:8]) <= 15:
+            self.txt_timer.setStyleSheet('color: rgb(252, 51, 40)')
+
+        elif int(time.toString("hh:mm:ss")[6:8]) <= 45:
+            self.txt_timer.setStyleSheet('color: rgb(252, 206, 40)')
+        
+        if time.toString("hh:mm:ss") == "00:00:00":
+            time = time.addSecs(-1)
+            
+            self.timer.stop()
+
+    
 #app = QApplication([])
 #sw = SecondWin()

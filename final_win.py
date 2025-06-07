@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QLineEdit, QWidge
 
 from instr import *
 
+
 class ThirdWin(QWidget):
-    def __init__(self):
+    def __init__(self, exp):
         super().__init__()
         self.set_appear()
         self.initUI()
@@ -31,6 +32,7 @@ class ThirdWin(QWidget):
 
         self.setLayout(self.mainLayoutV)
 
-
+    def result(self):
+        
 #app = QApplication([])
 #tw = ThirdWin()
