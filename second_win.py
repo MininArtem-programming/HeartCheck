@@ -2,14 +2,19 @@
 from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QLineEdit, QWidget, QHBoxLayout, QVBoxLayout
 
-
-
 from PyQt5.QtGui import QFont
-
 
 from instr import *
 from final_win import *
 
+
+class Experiment():
+    def __init__(self, age, test1, test2, test3):
+        self.age = age
+        self.test1 = test1
+        self.test2 = test2
+        self.test3 = test3
+    
 class SecondWin(QWidget):
     def __init__(self):
         super().__init__()
@@ -76,7 +81,7 @@ class SecondWin(QWidget):
 
 
         self.edit_line_name.setPlaceholderText(txt_hintname)
-        self.edit_line_age.setPlaceholderText('0')
+        #self.edit_line_age.setPlaceholderText('0')
         self.edit_age.setPlaceholderText('0')
         self.edit_pulse1.setPlaceholderText('0')
         self.edit_pulse_before.setPlaceholderText('0')
@@ -161,6 +166,6 @@ class SecondWin(QWidget):
             
             self.timer.stop()
 
-    
+
 #app = QApplication([])
 #sw = SecondWin()
